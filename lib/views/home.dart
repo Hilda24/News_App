@@ -34,9 +34,12 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 7.0),
+              height: 70.0,
               child: ListView.builder(
                 itemCount: categories.length,
                 shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (context,index){
                   return CategoryTile(
                     imageUrl: categories[index].imageUrl,
@@ -57,12 +60,45 @@ class CategoryTile extends StatelessWidget {
   CategoryTile({this.imageUrl,this.categoryName});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Image.network(imageUrl, width: 120.0, height: 60.0),
-        ],
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.only(right: 5),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6.0),
+              child: Image.network(
+                imageUrl, width: 120.0, 
+                height: 60.0, 
+                fit: BoxFit.cover),),
+            Container(
+              alignment: Alignment.center,
+              width: 120.0,
+              height: 60.0,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6.0), color: Colors.black26),
+              child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500),),
+            )
+          ],
+        ),
       ),
+    );
+  }
+}
+
+
+class BlogTile extends StatelessWidget {
+  final String imageUrl, title, desc;
+  const BlogTile({ Key? key,required this.imageUrl,required this.title,required this.desc}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: [
+        Image.network(imageUrl),
+        Text(title),
+        Text(desc)
+      ],),
     );
   }
 }
