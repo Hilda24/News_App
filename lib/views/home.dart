@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news/helper/data.dart';
@@ -49,41 +50,44 @@ class _HomeState extends State<Home> {
         child: Container(
           child: CircularProgressIndicator(),
         ),
-      ):Container(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 7.0),
-              height: 70.0,
-              child: ListView.builder(
-                itemCount: categories.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context,index){
-                  return CategoryTile(
-                    imageUrl: categories[index].imageUrl,
-                    categoryName: categories[index].categoryName,
-                  );
-                },
+      ):SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(            
+            children: [
+              Container(
+                height: 70.0,
+                child: ListView.builder(
+                  itemCount: categories.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context,index){
+                    return CategoryTile(
+                      imageUrl: categories[index].imageUrl,
+                      categoryName: categories[index].categoryName,
+                    );
+                  },
+                ),
               ),
-            ),
-            //Categories
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 7.0),
-              height: 580.0,
-              child: ListView.builder(
-                itemCount: articles.length,
-                itemBuilder: (context,index){
-                  return BlogTile(
-                    imageUrl: articles[index].image, 
-                    title: articles[index].title, 
-                    desc: articles[index].description
-                  );
-                }
-              ),
-
-            )
-          ],
+              //Categories
+              Container(
+                padding: EdgeInsets.only(top: 16.0),
+                // height: 580.0,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: articles.length,
+                  itemBuilder: (context,index){
+                    return BlogTile(
+                      imageUrl: articles[index].image, 
+                      title: articles[index].title, 
+                      desc: articles[index].description
+                    );
+                  }
+                ),
+      
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -103,8 +107,8 @@ class CategoryTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6.0),
-              child: Image.network(
-                imageUrl, width: 120.0, 
+              child: CachedNetworkImage(
+                imageUrl: imageUrl, width: 120.0, 
                 height: 60.0, 
                 fit: BoxFit.cover),),
             Container(
@@ -131,8 +135,8 @@ class BlogTile extends StatelessWidget {
     return Container(
       child: Column(children: [
         Image.network(imageUrl),
-        Text(title),
-        Text(desc)
+        Text(title, style: TextStyle(fontSize: 17.0, color: Colors.black87),),
+        Text(desc, style: TextStyle(color: Colors.grey),)
       ],),
     );
   }
