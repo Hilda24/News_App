@@ -5,6 +5,7 @@ import 'package:news/helper/data.dart';
 import 'package:news/helper/news.dart';
 import 'package:news/models/article_model.dart';
 import 'package:news/models/category_model.dart';
+import 'package:news/views/article_view.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -72,7 +73,7 @@ class _HomeState extends State<Home> {
               //Categories
               Container(
                 padding: EdgeInsets.only(top: 16.0),
-                // height: 580.0,
+                height: 580.0,
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: articles.length,
@@ -80,11 +81,11 @@ class _HomeState extends State<Home> {
                     return BlogTile(
                       imageUrl: articles[index].image, 
                       title: articles[index].title, 
-                      desc: articles[index].description
+                      desc: articles[index].description,
+                      url: articles[index].url
                     );
                   }
                 ),
-      
               )
             ],
           ),
@@ -127,17 +128,24 @@ class CategoryTile extends StatelessWidget {
 
 
 class BlogTile extends StatelessWidget {
-  final String imageUrl, title, desc;
-  const BlogTile({ Key? key,required this.imageUrl,required this.title,required this.desc}) : super(key: key);
+  final String imageUrl, title, desc, url;
+  const BlogTile({ Key? key,required this.imageUrl,required this.title,required this.desc,required this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: [
-        Image.network(imageUrl),
-        Text(title, style: TextStyle(fontSize: 17.0, color: Colors.black87),),
-        Text(desc, style: TextStyle(color: Colors.grey),)
-      ],),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)
+          ));
+      },
+      child: Container(
+        child: Column(children: [
+          Image.network(imageUrl),
+          Text(title, style: TextStyle(fontSize: 17.0, color: Colors.black87),),
+          Text(desc, style: TextStyle(color: Colors.grey),)
+        ],),
+      ),
     );
   }
 }
