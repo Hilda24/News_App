@@ -41,6 +41,13 @@ class _CategoryNewsState extends State<CategoryNews> {
             Text("Dangfanq Lemon News", style: TextStyle(color: Colors.red),)
           ],
         ),
+        actions: [Opacity(
+          opacity: 0,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Icon(Icons.sd_card_alert_rounded),
+          ),
+        )],
         elevation: 0.0,
       ),
       body:_loading ? Center(
@@ -49,6 +56,7 @@ class _CategoryNewsState extends State<CategoryNews> {
         ),
       ):SingleChildScrollView(
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(children: [
             Container(
                   padding: EdgeInsets.only(top: 16.0),
