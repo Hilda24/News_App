@@ -1,10 +1,10 @@
 class ArticleModel{
-  String author;
-  String title;
-  String description;
-  String image;
-  String url;
-  String content;
+  String author = "";
+  String title = "";
+  String description = "";
+  String image = "";
+  String url = "";
+  String content = "";
   // DateTime publishedat;
 
   ArticleModel({
